@@ -21,7 +21,7 @@ export const validarToken = async( req, res , next ) => {
 
 
     try {
-        const payload = jwt.verify(token,"ultramegasecreto");
+        const payload = jwt.verify(token,process.env.JWT_SECRET_KEY);
         const usuario = await UsuarioModel.findOne({correo:payload.correo});
         console.log(payload.correo)
         console.log(usuario)
