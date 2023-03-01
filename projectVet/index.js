@@ -1,6 +1,7 @@
 import express from "express";
 import { usuarioRouter } from "./router/usuarios.router.js";
 import { citasRouter } from "./router/citas.router.js";
+import { petRouter } from "./router/pet.router.js";
 import mongoose from "mongoose";
 import { validarToken } from "./utils/validador.js";
 const server = express();
@@ -11,9 +12,12 @@ server.all("/citas",validarToken)
 server.all("/citas/:id",validarToken)
 server.all("/usuarios",validarToken)
 server.all("/usuarios/:id",validarToken)
+server.all("/pet",validarToken)
+server.all("/pet/:id",validarToken)
 
 server.use(usuarioRouter);
-server.use(citasRouter)  
+server.use(citasRouter);
+server.use(petRouter);  
 
 
 const puerto = process.env.PORT ?? 3000;

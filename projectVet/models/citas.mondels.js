@@ -43,9 +43,8 @@ export const citasSchema = new mongoose.Schema(
       required: true,
       maxLength: 50,
     },
-    usuario: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
+    pet: {
+      type: [mongoose.Schema.Types.ObjectId],
     },
   },
   {

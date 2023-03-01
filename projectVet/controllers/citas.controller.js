@@ -1,5 +1,6 @@
 import { citasModel } from "../models/citas.mondels.js";
 import { UsuarioModel } from "../models/usuarios.models.js";
+import { PetModel } from "../models/pet.models.js";
 
 export const devolverCitas = async (req, res) => {
   const respuestaPromesas = req.user.citas.map(async (citaId) => {
@@ -15,8 +16,11 @@ export const devolverCitas = async (req, res) => {
 };
 
 export const crearCitas = async (req, res) => {
+  console.log (req.body);
   const data = req.body;
   const idUsuario = req.user._id;
+  const idPet = req.body.pet;
+
 
   const cita_creada = await citasModel.create({
     ...data,
@@ -26,6 +30,10 @@ export const crearCitas = async (req, res) => {
   const usuario_encontrado = await UsuarioModel.findById(idUsuario);
   usuario_encontrado.citas.push(cita_creada._id);
   await usuario_encontrado.save();
+
+  const pet_encontrado = await PetModel.findById(idPet);
+  pet_encontrado.citas.push(cita_creada._id);
+  await pet_encontrado.save();
 
   return res.json({
     message: "Cita creada exitosamente",
